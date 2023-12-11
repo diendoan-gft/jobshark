@@ -1,0 +1,12 @@
+ISSUES:
+
+- No EFS
+- ALB no HTTPS
+- NO ACM
+- NO Route53
+- EC2 not able session manager
+
+
+1. To have HTTPS
+Need To have Route53
+Then ACM -> ACM arn on ALB
