@@ -36,9 +36,9 @@ module "db" {
 
   # All available versions: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts
   engine               = "postgres"
-  engine_version       = "15.4"
-  family               = "postgres15" # DB parameter group
-  major_engine_version = "15"         # DB option group
+  engine_version       = "14.4"
+  family               = "postgres14" # DB parameter group
+  major_engine_version = "14"         # DB option group
   instance_class       = var.db_instance
 
   allocated_storage      = 20
@@ -49,12 +49,12 @@ module "db" {
   username = aws_ssm_parameter.rds["/database/postgres/master/username"].value
   password = aws_ssm_parameter.rds["/database/postgres/master/password"].value
   port     = var.db_port
-
-  multi_az = var.env != "prod" ? false : true
+  publicly_accessible = true
+  multi_az = var.env != "prod" ? false : false
   # DB subnet group
   create_db_subnet_group = true
   subnet_ids             = module.vpc.private_subnets
-  vpc_security_group_ids = [module.rds_sg.security_group_id,aws_security_group.public_ip_list.id]
+  vpc_security_group_ids = [module.rds_sg.security_group_id, aws_security_group.public_ip_list.id]
 
   maintenance_window              = "Mon:00:00-Mon:03:00"
   backup_window                   = "03:00-06:00"

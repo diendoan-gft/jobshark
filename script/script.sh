@@ -1,22 +1,12 @@
 #!/bin/bash
-sudo yum update -y
-sudo yum install -y nginx
-sudo systemctl start nginx
+sudo apt update -y
+sudo apt install nginx -y
 sudo systemctl enable nginx
-sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo snap install amazon-ssm-agent --classic -y
+sudo snap start amazon-ssm-agent
+sudo apt install --no-install-recommends php8.1 -y
+sudo apt install php-cli unzip curl software-properties-common -y
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+sudo composer self-update
 
-# Create EFS Shared path
-sudo mkdir -p /app
-sudo mount -t efs ${efs_id}:/ /app
-sudo yum -y install git rpm-build make
-git clone https://github.com/aws/efs-utils
-cd efs-utilss
-make rpm
-sudo yum -y install build/amazon-efs-utils*rpm
-sudo chown -R 755 /app
-
-
-# Edit /etc/fstab to add the following lines
-sudo echo "${efs_id}    /app     efs _netdev,noresvport      0       0" >> /etc/fstab
-# Remount filesystems
-sudo mount -a

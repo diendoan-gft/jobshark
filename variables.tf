@@ -51,7 +51,7 @@ variable "ec2_instance" {
 
 variable "ec2_ami" {
   description = "EC2 AMI"
-  default     = "ami-0016cb673a474845c"
+  default     = "ami-0fe8bec493a81c7da"
 }
 
 variable "min_size" {

@@ -30,7 +30,7 @@ module "alb" {
       target_type      = "instance"
       health_check = {
         enabled             = true
-        interval            = 10
+        interval            = 60
         path                = "/"
         port                = 80
         healthy_threshold   = 3

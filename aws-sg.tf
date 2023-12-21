@@ -21,6 +21,7 @@ module "alb_sg" {
       cidr_blocks = "0.0.0.0/0"
     }
   ]
+  egress_rules = ["all-all"]
 }
 
 module "web_sg" {
